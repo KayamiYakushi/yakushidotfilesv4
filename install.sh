@@ -106,10 +106,16 @@ link_target() {
     echo "   • Linked $(basename "$dest")."
 }
 
-for config in "$DOTFILES_DIR"/*; do
-    config_name="${config##*/}"
-    should_skip "$config_name" && continue
-    link_target "$config" "$HOME/.config/$config_name"
+CONFIG_DIRS=(
+    fastfetch
+    hypr
+    kitty
+    rofi
+    waybar
+)
+
+for config_name in "${CONFIG_DIRS[@]}"; do
+    link_target "$DOTFILES_DIR/$config_name" "$HOME/.config/$config_name"
 done
 
 link_target "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
