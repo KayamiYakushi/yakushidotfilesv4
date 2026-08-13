@@ -68,6 +68,17 @@ sudo pacman -Syu --needed --noconfirm "${ALL_PACKAGES[@]}"
 echo ":: Refreshing font cache..."
 fc-cache -f
 
+echo ":: Disabling power-profiles-daemon..."
+sudo systemctl mask --now power-profiles-daemon.service >/dev/null 2>&1 || true
+
+echo ":: Installing CPU governor persistence service..."
+
+GOVERNOR_SERVICE="/etc/systemd/system/yakushidotfiles-governor.service"
+sed "s|__HOME__|$HOME|g" "$DOTFILES_DIR/systemd/yakushidotfiles-governor.service" | sudo tee "$GOVERNOR_SERVICE" >/dev/null
+
+sudo systemctl daemon-reload
+sudo systemctl enable yakushidotfiles-governor.service >/dev/null
+
 echo ":: Linking dotfiles..."
 mkdir -p "$HOME/.config"
 

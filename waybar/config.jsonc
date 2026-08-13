@@ -119,7 +119,8 @@
   },
 
   "custom/governor": {
-    "format": "󱐋",
+    "exec": "if [ -f ~/.config/yakushidotfiles/governor ]; then case $(cat ~/.config/yakushidotfiles/governor) in performance) echo 󱐋 ;; powersave) echo 󰂎 ;; esac; else echo 󱐋; fi",
+    "interval": 2,
     "on-click": "~/.config/hypr/scripts/cpu_governor.sh",
     "tooltip": true,
     "tooltip-format": "CPU Governor Change"
